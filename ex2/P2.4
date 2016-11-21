@@ -1,0 +1,27 @@
+read numx
+num=$numx
+char="*"
+sp=""
+for i in $( seq $numx -1 1 ); do
+	str=""
+	for j in $( seq $i ); do		
+		str="$str$char"
+	done
+	echo "$sp$str"
+        sp="$sp "
+done
+sp=""
+for i in $( seq 2 1 $numx ); do
+        str=""
+        sp=""
+        for j in $( seq $i ); do
+                str="$str$char"
+        done
+        for j in $( seq $[numx-i] ); do
+            sp="$sp "
+        done
+        echo "$sp$str"
+done
+
+#seq 7 -1 1
+	
