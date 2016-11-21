@@ -1,0 +1,20 @@
+echo -n "Enter file name: "
+read filename
+while [ ! -f $filename ]
+do
+	clear
+	echo -n "Enter file name: "
+	read filename
+done
+echo -n "file $filename with numbers (Y/N)? "
+read answer
+while [ $answer != Y ] && [ $answer != N ]
+do
+	#echo -n "file $filename with numbers (Y/N)? "
+	read answer
+done
+if [ $answer == Y ]; then
+	cat -n $filename
+else
+	cat $filename
+fi

@@ -1,0 +1,16 @@
+echo -n "Enter directory name: "
+read dirname
+mkdir $dirname
+echo -n "Enter list of sub-directories of directory $dirname: "
+read subdirs
+for dir in $subdirs; do
+	dirpath=$dirname/$dir
+	mkdir $dirpath
+	echo -n "Enter file names in sub-directory $dir: "
+	read files
+	i=1
+	for file in $files; do
+		echo $i >| $dirpath/$file
+		i=$[i+1]	
+	done
+done

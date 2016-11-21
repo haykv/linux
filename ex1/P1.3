@@ -1,0 +1,8 @@
+mul=1
+while read x
+do
+	if [ $x -gt 0 ]; then
+		mul=$[mul*x]
+	fi
+done
+echo "The multiplication of positive numbers entered is: $mul"
