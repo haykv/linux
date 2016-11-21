@@ -1,0 +1,18 @@
+read numx
+num=$numx
+sp=""
+for i in $( seq $numx ); do
+	str=""
+        sum=$i
+	for j in $( seq $numx ); do
+		str="$str$sum"
+                if [ $j -ne $numx ]; then
+                    str="$str "
+                fi
+                sum=$[sum+numx] 		
+	done
+        echo $str
+done
+
+#seq 7 -1 1
+	
