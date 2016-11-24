@@ -1,0 +1,7 @@
+seq -s" " 8
+seq 8 -s" "
+echo abc
+seq -s"ab" 10 2 16
+for x in aa bb cc; do echo $x; done
+z=0; while [ $z -le 3 ]; do echo $z; ((z+=1)); done
+gg
