@@ -1,13 +1,12 @@
 echo -n "Enter file name: "
 read filename
 ranges=""
-first=0
+echo -n "Enter 2 parameters in the format num1-num2: "
 while read range; do
-    if [ $first -ne 0 ]; then
-        echo -n "Enter 2 parameters in the format num1-num2: "
-    fi
     ranges="$ranges $range"
+    echo -n "Enter 2 parameters in the format num1-num2: "
 done
+echo
 while read line; do
     str=""
     for range in $ranges; do

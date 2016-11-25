@@ -1,13 +1,9 @@
 #!/bin/bash
-if [ "$1" == "debug" ]; then
-    num_list="4 2 6 1"
-    num_list="4 6 1 2"
-else
-    echo -n "Enter list of numbers: "
-    read num_list
-fi
-filename=Prog1
-echo -n "" > temp
+echo -n "Enter program name: "
+read filename
+echo -n "Enter list of numbers: "
+read num_list
+echo -n "" >| temp
 for num in $num_list; do
    line_number=1
    while read line; do    
@@ -18,5 +14,6 @@ for num in $num_list; do
     done < $filename
 done
 chmod +x temp
-temp
+temp 2>|stderr.out
+cat stderr.out
 

@@ -1,0 +1,28 @@
+#!/bin/bash
+echo -n "Enter file name: "
+read filename
+top=$(echo $(head -1 $filename))
+if [ $(wc -l < $filename) -eq 1 ]; then
+    sum=$top
+else
+    bot=$(echo $(tail -1 $filename))
+    c=0
+    for x in $top; do
+        ((sum+=x))
+        ((c+=1))
+    done
+    for x in $bot; do
+        ((sum+=x))
+    done
+    i=1 
+    while read line; do
+        if [ $i -ne 1 ] && [ $i -ne $c ]; then
+            sspace=$(echo $line)
+            left=$(echo $line | cut -d" " -f1)
+            right=$(echo $line | cut -d" " -f$c)
+            sum=$[left+right+sum]
+        fi
+        ((i+=1))
+    done < $filename
+fi
+echo "The sum of the outside frame is: $sum"

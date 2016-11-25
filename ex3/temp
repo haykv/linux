@@ -1,4 +1,4 @@
 seq -s"ab" 10 2 16
+seq 8 -s" "
 z=0; while [ $z -le 3 ]; do echo $z; ((z+=1)); done
 seq -s" " 8
-seq 8 -s" "
