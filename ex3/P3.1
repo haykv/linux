@@ -12,7 +12,7 @@ for num in $num_list; do
    line_number=1
    while read line; do    
         if [ $num -eq $line_number ]; then            
-            echo $line >> temp
+            echo "$line" >> temp
         fi
         line_number=$[line_number+1]
     done < $filename
