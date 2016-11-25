@@ -1,6 +1,5 @@
 echo -n "Enter 4 parameters in the format prog-file-file-file: "
 while read cmd; do
-
     prog=$(echo $cmd | cut -d"-" -f1)
     fn1=$(echo $cmd | cut -d"-" -f2)
     fn2=$(echo $cmd | cut -d"-" -f3)
