@@ -17,7 +17,6 @@ else
     i=1 
     while read line; do
         if [ $i -ne 1 ] && [ $i -ne $c ]; then
-            sspace=$(echo $line)
             left=$(echo $line | cut -d" " -f1)
             right=$(echo $line | cut -d" " -f$c)
             sum=$[left+right+sum]
