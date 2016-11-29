@@ -1,0 +1,27 @@
+#!/bin/bash
+
+echo -n "Enter 3 parameters in format file-string1-string2: "
+read cmd
+filename=$(echo $cmd | cut -d"-" -f1)
+fn1=$(echo $cmd | cut -d"-" -f2)
+fn2=$(echo $cmd | cut -d"-" -f3)
+words=""
+while read line; do
+    for w in $(echo $line); do
+        words="$words $w"
+    done
+done < $filename
+upper=$(echo $words | tr a-z A-Z)
+deleted=$(echo $words | tr -d $fn1)
+replaced=$(echo $words | tr $fn1 $fn2)
+left=$(echo $words | tr -dc "$fn1 ")
+
+# printing results
+echo "The words in file $filename after replacing lower to capital are:"
+echo $upper
+echo "The words in file $filename after deleting chars in $fn1 are:"
+echo $deleted
+echo "The words in file $filename after replacing abc with $fn2 are:"
+echo $replaced
+echo "The words in file $filename after deleting chars not in $fn1 are:"
+echo $left
