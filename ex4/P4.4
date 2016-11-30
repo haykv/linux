@@ -1,5 +1,6 @@
 #!/bin/bash
-echo -n "Enter 3 parameters in format file-num1-num2: "
+msg="Enter 3 parameters in format file-num1-num2: "
+echo -n "$msg"
 echo -n "" >| temp
 
 while read cmd; do
@@ -16,6 +17,7 @@ while read cmd; do
         ((line_number+=1))
     done < $file
     echo "The size of file $file in lines $n1-$n2 is: $charcnt" >> temp
+    echo -n "$msg"
 done
 echo
 sort -rnk10 temp
