@@ -1,0 +1,15 @@
+#!/usr/bin/expect
+log_user 0
+spawn P4.4
+log_user 1
+set f [open "test4"]
+set commands [split [read $f] "\n"]
+close $f
+foreach cmd $commands {
+    expect {
+        "Enter 3 parameters in format file-num1-num2: "
+    }
+    send "$cmd\n"
+}
+send 
+puts $expect_out(buffer)

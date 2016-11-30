@@ -1,0 +1,21 @@
+#!/bin/bash
+echo -n "Enter 3 parameters in format file-num1-num2: "
+echo -n "" >| temp
+
+while read cmd; do
+    file=$(echo $cmd | cut -d"-" -f1)
+    n1=$(echo $cmd | cut -d"-" -f2)
+    n2=$(echo $cmd | cut -d"-" -f3)
+    charcnt=0
+    line_number=1
+    while read line; do
+        if [ $line_number -ge $n1 ] && [ $line_number -le $n2 ]; then
+            cnt=$(echo "$line" | wc -m)
+            charcnt=$[charcnt+cnt]
+        fi
+        ((line_number+=1))
+    done < $file
+    echo "The size of file $file in lines $n1-$n2 is: $charcnt" >> temp
+done
+echo
+sort -rnk10 temp
