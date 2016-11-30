@@ -1,4 +1,18 @@
-test_expect P3.1 test1 0
-test_expect P3.2 test2 1
-test_expect P3.3 test3 1
-test_expect P3.4 test4 0
+#!/bin/bash
+test_expect P3.1 test1 0 | tee log1
+test_expect P3.2 test2 1 | tee log2
+test_expect P3.3 test3 1 | tee log3
+test_expect P3.4 test4 0 | tee log4
+
+echo "Tests done - running diff"
+for log in $(ls good); do
+    diff -q $log good/$log
+    ((status+=$?))
+done
+if [ $status -ne 0 ]; then
+    echo -e "\e[101mLOGS DIFFER!"
+else
+    echo -e "\e[42mPASS"
+fi
+echo -ne "\e[49m"
+

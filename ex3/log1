@@ -1,0 +1,16 @@
+================================================
+Testing : P3.1
+================================================
+Enter program name: Prog1
+Enter list of numbers: 4 2 6 1
+10ab12ab14ab16
+0
+1
+2
+3
+1 2 3 4 5 6 7 8
+seq: invalid floating point argument: -s 
+Try `seq --help' for more information.
+================================================
+Done : P3.1
+================================================
