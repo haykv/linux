@@ -1,0 +1,17 @@
+#!/bin/bash
+
+echo -n "Enter 3 parameters in the format num1@num2@num3: "
+read cmd
+n1=$(echo $cmd | cut -d"@" -f1)
+n2=$(echo $cmd | cut -d"@" -f2)
+n3=$(echo $cmd | cut -d"@" -f3)
+del="%"
+str="$n1$del$n2"
+for i in $(seq $[n3-2]); do
+    result=$[n1+n2]
+    str="$str$del$result"
+    n1=$n2
+    n2=$result
+    del="$del%"
+done
+echo $str
