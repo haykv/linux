@@ -1,0 +1,15 @@
+================================================
+Testing : P4.1
+================================================
+Enter 3 parameters in format file-string1-string2: A1-abc-123
+The words in file A1 after replacing lower to capital are:
+AA12BB34CC Z23ABZY 123 87AAB2 6667771
+The words in file A1 after deleting chars in abc are:
+1234 z23ZY 123 872 6667771
+The words in file A1 after replacing abc with 123 are:
+1112223433 z2312ZY 123 871122 6667771
+The words in file A1 after deleting chars not in abc are:
+aabbcc ab aab
+================================================
+Done : P4.1
+================================================

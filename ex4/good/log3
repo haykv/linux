@@ -1,0 +1,13 @@
+================================================
+Testing : P4.3
+================================================
+Enter file name: F1
+Enter numbers in format num1,num2,num3... : 4,2,3,1,2
+The first 4 big numbers in file F1 are: 90#40#30#13
+The next 2 big numbers in file F1 are: 11#10
+The next 3 big numbers in file F1 are: 8#7#6
+The next big number in file F1 is: 6
+The next 2 big numbers in file F1 are: 5#5
+================================================
+Done : P4.3
+================================================
