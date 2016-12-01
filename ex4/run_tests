@@ -6,8 +6,12 @@ test_expect P4.4 test4 1 | tee log4
 
 echo "Tests done - running diff"
 for log in $(ls good); do
-    diff -q $log good/$log
-    ((status+=$?))
+    if [ -f $log ]; then
+        diff -q $log good/$log
+        ((status+=$?))
+    else
+        echo "-W- $log not found during run"
+    fi
 done
 if [ $status -ne 0 ]; then
     echo -e "\e[101mLOGS DIFFER!"
