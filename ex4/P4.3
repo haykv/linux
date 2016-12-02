@@ -1,20 +1,14 @@
 #!/bin/bash
 echo -n "Enter file name: "
 read filename
-words=""
-while read line; do
-    for w in $(echo $line); do
-        words="$words$w\n"
-    done
-done < $filename
-sorted=$(echo -e $words|sort -nr)
+sorted=$(cat $filename | tr -s " " "\n" | sort -nr)
 echo -n "Enter numbers in format num1,num2,num3... : "
 read numbers
 numlist=$(echo $numbers | tr "," " ")
 start=1
 for num in $numlist; do
     end=$[start+num-1]
-    result=$(echo $sorted | cut -d" " -f$start-$end --output-delimiter="#") 
+    result=$(echo $sorted | cut -d" " -f$start-$end | tr " " "#") 
     if [ $start -eq 1 ]; then
         echo "The first $num big numbers in file $filename are: $result"
     else

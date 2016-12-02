@@ -2,7 +2,6 @@
 msg="Enter 3 parameters in format file-num1-num2: "
 echo -n "$msg"
 echo -n "" >| temp
-
 while read cmd; do
     file=$(echo $cmd | cut -d"-" -f1)
     n1=$(echo $cmd | cut -d"-" -f2)
@@ -16,8 +15,14 @@ while read cmd; do
         fi
         ((line_number+=1))
     done < $file
-    echo "The size of file $file in lines $n1-$n2 is: $charcnt" >> temp
+    echo $charcnt $n1-$n2 $file >> temp
     echo -n "$msg"
 done
 echo
-sort -rnk10 temp
+cat temp | sort -nr > results
+while read line; do
+    charcnt=$(echo $line| cut -d" " -f1)
+    linenum=$(echo $line| cut -d" " -f2)
+    file=$(echo $line| cut -d" " -f3)
+    echo "The size of file $file in lines $linenum is: $charcnt"
+done < results
