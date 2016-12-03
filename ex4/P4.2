@@ -8,10 +8,11 @@ n3=$(echo $cmd | cut -d"@" -f3)
 del="%"
 str="$n1$del$n2"
 for i in $(seq $[n3-2]); do
+    del="$del%"
     result=$[n1+n2]
     str="$str$del$result"
     n1=$n2
     n2=$result
-    del="$del%"
+    #del="$del%"
 done
 echo $str
