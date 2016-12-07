@@ -1,11 +1,9 @@
 ================================================
-Testing : P5.1
+Testing : P5.2
 ================================================
-Enter 2 parameters in format file-string: F1-a1b2c5
-112233445aabddeecc
-8288a1bccc5
-aa12bb34c5c
-z23ab3c21b5a
+Enter list of files in format file1-file2-file3...: A1-A3-A2-A4
+Enter 2 numbers in format num1%num2: 2%4
+cat: files: No such file or directory
 ================================================
-Done : P5.1
+Done : P5.2
 ================================================

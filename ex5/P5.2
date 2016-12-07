@@ -1,0 +1,32 @@
+#!/bin/bash
+echo -n "Enter list of files in format file1-file2-file3...: "
+read files
+echo -n "Enter 2 numbers in format num1%num2: "
+read numbers
+n1=$(echo $numbers | cut -d"%" -f1)
+n2=$(echo $numbers | cut -d"%" -f2)
+
+echo -n "" >| result2
+allfiles=$(echo $files | tr "-" " ")
+filesnum=$(echo $allfiles | wc -w)
+sorted=$(cat $allfiles | tr " " "\n" | sort -u)
+words=$(echo $sorted)
+for w in $words; do
+    flag=0
+    for f in $allfiles; do
+        cnt=$(cat $f | grep -ow $w | wc -l)
+        #if [ $w == "1" ] ; then
+        #    cat $f | grep -w $w --color
+        #fi
+        if [ $cnt -ge $n1 ] && [ $cnt -le $n2 ]; then
+            ((flag+=1))
+        else
+            break
+        fi
+    done
+    if [ $flag -eq $filesnum ]; then
+        wordcnt=$(cat $allfiles | grep -ow $w | wc -l)
+        echo "$w $wordcnt" >> result2
+    fi
+done
+sort -k2 result2
