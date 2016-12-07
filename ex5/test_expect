@@ -1,0 +1,35 @@
+#!/usr/bin/expect -f
+##########################################################
+set program [lindex $argv 0]
+#set msg "Enter 3 parameters in format file-num1-num2: "
+set msg "Enter*"
+set cmdfile [lindex $argv 1]
+set exitloop [lindex $argv 2]
+##########################################################
+puts "================================================"
+puts "Testing : $program"
+puts "================================================"
+log_user 0
+spawn $program
+log_user 1
+set f [open $cmdfile]
+set commands [split [read $f] "\n"]
+close $f
+foreach cmd $commands {
+    if { $cmd != "" } {
+        expect {
+            $msg
+        }
+        send "$cmd\n"
+    }
+}
+expect {
+    $msg
+}
+if { $exitloop == 1 } {
+    send \004
+    expect eof
+}
+puts "================================================"
+puts "Done : $program"
+puts "================================================"

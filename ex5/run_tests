@@ -1,0 +1,21 @@
+#!/bin/bash
+test_expect P5.1 test1 0 | tee log1
+#test_expect P5.2 test2 0 | tee log2
+#test_expect P5.3 test3 0 | tee log3
+#test_expect P5.4 test4 1 | tee log4
+
+echo "Tests done - running diff"
+for log in $(ls good); do
+    if [ -f $log ]; then
+        diff -q $log good/$log
+        ((status+=$?))
+    else
+        echo "-W- $log not found during run"
+    fi
+done
+if [ $status -ne 0 ]; then
+    echo -e "\e[101mLOGS DIFFER!"
+else
+    echo -e "\e[42mPASS"
+fi
+echo -ne "\e[49m"

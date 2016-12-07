@@ -1,0 +1,21 @@
+#!/bin/bash
+echo -n "Enter 2 parameters in format file-string: "
+read cmd
+echo -n "" >|result1
+filename=$(echo $cmd | cut -d"-" -f1)
+str=$(echo $cmd | cut -d"-" -f2)
+strlen=$[ $(echo $str | wc -m) - 1 ]
+words=$(echo $(cat $filename))
+for w in $words; do
+    for i in $(seq $strlen); do
+        char=$(echo $str | cut -c$i)
+        found=$(echo $w | grep $char)
+        if ! [ $found ]; then
+            break
+        fi
+    done
+    if [ $found ]; then
+        echo $w >> result1
+    fi
+done
+sort result1
