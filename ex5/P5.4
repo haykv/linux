@@ -1,0 +1,14 @@
+#!/bin/bash
+errmsg="Illegal arithmetic expression"
+ops="-+/*%"
+echo -n "Enter formula: "
+read cmd
+check=$(echo $cmd | egrep "[$ops][$ops]+|^[$ops]|[$ops]$" | wc -w)
+if [ $check -eq 0 ]; then
+    result=$(echo $cmd | tr -- "$ops" " ")
+    echo $result
+else
+    echo $errmsg
+fi
+    
+
