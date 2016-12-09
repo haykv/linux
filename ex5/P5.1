@@ -5,7 +5,7 @@ echo -n "" >|result1
 filename=$(echo $cmd | cut -d"-" -f1)
 str=$(echo $cmd | cut -d"-" -f2)
 strlen=$[ $(echo $str | wc -m) - 1 ]
-words=$(echo $(cat $filename))
+words=$(cat $filename)
 for w in $words; do
     for i in $(seq $strlen); do
         char=$(echo $str | cut -c$i)

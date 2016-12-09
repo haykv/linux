@@ -15,9 +15,6 @@ for w in $words; do
     flag=0
     for f in $allfiles; do
         cnt=$(cat $f | grep -ow $w | wc -l)
-        #if [ $w == "1" ] ; then
-        #    cat $f | grep -w $w --color
-        #fi
         if [ $cnt -ge $n1 ] && [ $cnt -le $n2 ]; then
             ((flag+=1))
         else
