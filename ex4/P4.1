@@ -19,9 +19,12 @@ left=$(echo $words | tr -dc "$fn1 ")
 # printing results
 echo "The words in file $filename after replacing lower to capital are:"
 echo $upper
+echo
 echo "The words in file $filename after deleting chars in $fn1 are:"
 echo $deleted
+echo
 echo "The words in file $filename after replacing $fn1 with $fn2 are:"
 echo $replaced
+echo
 echo "The words in file $filename after deleting chars not in $fn1 are:"
 echo $left
