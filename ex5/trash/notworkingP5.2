@@ -1,0 +1,64 @@
+#!/bin/bash
+echo -n "Enter list of files in format file1-file2-file3...: "
+read files
+echo -n "Enter 2 numbers in format num1%num2: "
+read numbers
+n1=$(echo $numbers | cut -d"%" -f1)
+n2=$(echo $numbers | cut -d"%" -f2)
+
+echo -n "" >| result2
+allfiles=$(echo $files | tr "-" " ")
+filecnt=$(echo $allfiles | wc -w)
+words=$(cat $allfiles | tr " " "\n" | sort -u)
+for w in $words; do
+    wrdcnt=$(grep -w $w $allfiles | cut -d":" -f1 | uniq -c)
+    echo "$w $wrdcnt"
+    if [ $(echo "$wrdcnt" | wc -l) -eq $filecnt ]; then
+        sum=0
+        for i in $( seq 1 2 $(echo $wrdcnt| wc -w)); do
+            echo $wrdcnt | cut -d" " -f$i
+        done
+        
+    fi
+done
+
+
+
+#echo "$(seq -s"|" $n1 1 $n2)"
+#grep $word $allfiles
+
+
+#for file in $allfiles; do
+#    words=$(cat $file | tr " " "\n" | sort | uniq -c)
+#    match=$(echo "$words" | egrep -w "$(seq -s"|" $n1 1 $n2)" | sort -n)
+#    echo "$match"
+#    for i in $(seq 2 2 $(echo $match|wc -w)); do
+#        word=$(echo $match | cut -d" " -f$i)
+#        if [ $(grep -l $word $allfiles|wc -l) -eq $filecnt ]; then
+#            s=$(grep -ow $word $allfiles | wc -l)
+#            echo "$word $s" >> result2
+#        fi
+#    done
+     #egrep -w $(seq -s"|" $n1 1 $n2)
+    #for w in $(seq 1 2 $(echo $words | wc -w)
+#done
+#sort -unk2 result2
+#filesnum=$(echo $allfiles | wc -w)
+#sorted=$(cat $allfiles | tr " " "\n" | sort -u)
+#words=$(echo $sorted)
+#for w in $words; do
+#    flag=0
+#    for f in $allfiles; do
+#        cnt=$(cat $f | grep -ow $w | wc -l)
+#        if [ $cnt -ge $n1 ] && [ $cnt -le $n2 ]; then
+#            ((flag+=1))
+#        else
+#            break
+#        fi
+#    done
+#    if [ $flag -eq $filesnum ]; then
+#        wordcnt=$(cat $allfiles | grep -ow $w | wc -l)
+#        echo "$w $wordcnt" >> result2
+#    fi
+#done
+#sort -nk2 result2
