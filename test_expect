@@ -20,7 +20,7 @@ foreach cmd $commands {
         expect {
             $msg
         }
-        send "$cmd\n"
+        send -- "$cmd\n"
     }
 }
 if { $exitloop == 1 } {
