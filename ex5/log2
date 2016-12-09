@@ -3,7 +3,7 @@ Testing : P5.2
 ================================================
 Enter list of files in format file1-file2-file3...: A1-A3-A2-A4
 Enter 2 numbers in format num1%num2: 2%4
-cat: files: No such file or directory
+
 ================================================
 Done : P5.2
 ================================================

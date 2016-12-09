@@ -9,8 +9,8 @@ Enter list of numbers: 4 2 6 1
 2
 3
 1 2 3 4 5 6 7 8
-seq: invalid floating point argument: -s 
-Try `seq --help' for more information.
+seq: invalid floating point argument: ‘-s ’
+Try 'seq --help' for more information.
 ================================================
 Done : P3.1
 ================================================

@@ -80,7 +80,7 @@ set nostartofline
 " Display the cursor position on the last line of the screen or in the status
 " line of a window
 set ruler
-
+set rulerformat=%55(%{strftime('%a\ %b\ %e\ %I:%M\ %p')}\ %5l,%-6(%c%V%)\ %P%)
 " Always display the status line, even if only one window is displayed
 set laststatus=2
 
@@ -143,4 +143,4 @@ map Y y$
 " next search
 nnoremap <C-L> :nohl<CR><C-L>
 
-color codeschool
+color mustang
