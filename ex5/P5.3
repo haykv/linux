@@ -1,0 +1,30 @@
+#!/bin/bash
+echo -n "Enter file name + numbers in format file-num1%num2%num3...: "
+read cmd
+file=$(echo $cmd | cut -d"-" -f1)
+nums=$(echo $cmd | cut -d"-" -f2 | tr "%" " ")
+for i in $nums; do
+    echo -n "" >| result_$i
+done
+filelines=$(wc -l < $file)
+for i in $(seq $filelines); do
+    line=$(head -$i $file | tail -1)
+    for j in $nums; do
+        wrdcnt=$(echo $line | wc -w)
+        if [ $wrdcnt -ge $j ]; then
+            word=$(echo $line | cut -d" " -f$j)
+            echo $word >> result_$j
+        fi
+    done
+done
+for i in $nums; do
+    result=$(sort -u result_$i)
+    echo -n "$i:"
+    if [ $(echo $result | wc -w) -gt 0 ]; then
+        echo -n " "
+        echo $result
+    else
+        echo
+    fi 
+done
+
