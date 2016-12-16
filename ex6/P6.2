@@ -25,4 +25,5 @@ while IFS='' read -r line; do
     &&  [ $(echo $bl | egrep [0-9] | wc -l) -eq 0 ]; then
         echo "$line"
     fi
+
 done < $file

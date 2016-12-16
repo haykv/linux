@@ -1,0 +1,33 @@
+#!/bin/bash
+echo -n "Enter list of files in format file1-file2-file3...: "
+read files
+
+first=1
+
+for f in $(echo $files| tr "-" " ") ; do
+
+    max=0
+
+    if [ $first -eq 0 ]; then
+        echo
+    fi
+
+    first=0
+    >|temp4
+
+    while read line; do
+        wcnt=$(echo $line | wc -w)
+        if [ $wcnt -gt $max ]; then
+            max=$wcnt
+        fi
+        echo $line >> temp4
+    done < $f
+
+    echo $f
+
+    for i in $(seq $max -1 1); do
+        echo
+        cut -d" " -f1-$i temp4
+    done
+
+done

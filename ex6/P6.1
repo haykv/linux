@@ -1,11 +1,14 @@
 #!/bin/bash
 echo -n "Enter 3 parameters in format file-string-num: "
 read cmd
+
 filename=$(echo $cmd | cut -d"-" -f1)
 str=$(echo $cmd | cut -d"-" -f2)
 num=$(echo $cmd | cut -d"-" -f3)
+
 >| temp
 max=0
+
 while read line; do
     cols=$(echo $line | wc -w)
     if [ $cols -gt $max ]; then
@@ -13,6 +16,7 @@ while read line; do
     fi
     echo $line >> temp
 done < $filename
+
 for i in $(seq $max); do
     colstr=$(cut -d" " -f$i temp)
     if [ $(echo "$colstr" | grep -o $str | wc -w) -eq $num ]; then
