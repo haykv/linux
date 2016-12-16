@@ -1,0 +1,28 @@
+#!/bin/bash
+echo -n "Enter file name: "
+read file
+
+while IFS='' read -r line; do
+    
+    words=$(echo $line)
+    cnt=0
+    wrdcnt=$(echo $words | wc -w)
+    
+    if [ $wrdcnt -lt 4 ]; then
+        continue
+    fi 
+    
+    w2=$(echo $line | cut -d" " -f2)
+    w3=$(echo $line | cut -d" " -f3)
+    w4=$(echo $line | cut -d" " -f4)
+    bl=$(echo $line | cut -d" " -f$[wrdcnt-1])
+    w3digits=$(echo $w3 | egrep -o [0-9] | wc -l)
+    w3chars=$(echo $w3 | egrep -o [a-zA-Z] | wc -l)
+    
+    if  [ $(echo $w2 | egrep ^[0-9]+$) ] \
+    &&  [ $w3digits -eq $w3chars ] \
+    &&  [ "$w4" == "four" ] \
+    &&  [ $(echo $bl | egrep [0-9] | wc -l) -eq 0 ]; then
+        echo "$line"
+    fi
+done < $file
