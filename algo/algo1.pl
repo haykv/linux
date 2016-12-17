@@ -33,13 +33,13 @@ sub P {
 
 }
 
-my @A = map { rand(100) } ( 1..10 );
+my @A = map { int(rand(100)) } ( 1..10 );
 my $result = P(\@A,1,10);
 foreach my $val (sort { $b <=> $a } @A) {
-    printf("%.2f ",$val);
+    printf("%d ",$val);
 }
 print "\n";
 my $max=%$result{max};
 my $min=%$result{min};
-printf("MAX : %.2f\n", $max);
-printf("MIN : %.2f\n", $min);
+printf("MAX : %d\n", $max);
+printf("MIN : %d\n", $min);
