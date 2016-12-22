@@ -8,11 +8,11 @@ for f in $(echo $files| tr "-" " ") ; do
 
     max=0
 
-    if [ $first -eq 0 ]; then
-        echo
-    fi
+    #if [ $first -eq 0 ]; then
+    #    echo
+    #fi
 
-    first=0
+    #first=0
     >|temp4
 
     while read line; do
@@ -29,5 +29,5 @@ for f in $(echo $files| tr "-" " ") ; do
         echo
         cut -d" " -f1-$i temp4
     done
-
+    echo
 done
