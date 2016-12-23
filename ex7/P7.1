@@ -3,28 +3,11 @@ file=$1
 #str="12ab@5dab"
 while IFS='' read -r line; do
     wcnt=$(echo $line | wc -w)
-    str=$(echo $line | cut -d" " -f1)
+    first_word=$(echo $line | cut -d" " -f1)
     last_word=$(echo $line | cut -d" " -f$wcnt)
-    strlen=$(echo $str | wc -m)
-    ((strlen--))
-    flag=0
-    for i in $(seq $strlen); do
-        if [ $flag -eq 1 ]; then
-            break
-        fi
-        for j in $(seq $i $strlen); do
-            if [ $j -gt $i ]; then
-                check_str=$(echo $str | cut -c$i-$j)
-                fwrdcnt=$(echo $str | egrep -o $check_str | wc -l)
-                if [ $fwrdcnt -ge 2 ]; then
-                    last_match=$(echo $last_word | egrep "$check_str$check_str")
-                    if [ $last_match ]; then
-                        echo $line
-                        flag=1
-                        break
-                    fi                
-                fi    
-            fi
-        done
-    done
+    if [ $(echo "$first_word $last_word" | egrep "([^ ]+)+).*\1 .*\1\1$") ]; then
+
+
+
+
 done < $file
