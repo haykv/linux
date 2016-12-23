@@ -1,0 +1,25 @@
+#!/bin/bash
+i=$1
+str=$2
+sum=0
+for char in $(echo $str|egrep -o .); do 
+
+    flag=0
+    k=1
+
+    for dig in {a..z}; do
+
+        if [ "$dig" == "$char" ]; then
+            flag=1
+            break
+        fi
+        ((k++))
+
+    done
+
+    if [ $flag -eq 1 ]; then
+        sum=$[sum+k*i]
+    fi
+
+done
+echo $sum
