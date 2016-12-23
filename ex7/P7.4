@@ -8,9 +8,24 @@ for w in $@; do
         continue
     fi
     if [ $dflag -eq 0 ]; then
-        strings="$strings $w"
+        if [ "$strings" == "" ]; then
+            strings=$w
+        else
+            strings="$strings|$w"
+        fi
     else
         dirs="$dirs $w"
     fi
 done
-
+results=$(find $dirs -type f -exec egrep -l "($strings)" {} \;)
+dirscnt=$(echo $dirs | wc -w)
+>|temp4
+for f in $results; do
+    dir=$(echo $f | cut -f1 -d"/")
+    file=$(echo $f | tr "/" "\n" | tail -1)
+    echo "$file $dir" >> temp4
+done
+results=$(cat temp4 | sort -u | cut -f1 -d" " | uniq -c | grep $dirscnt)
+for i in $(seq 2 2 $(echo $results | wc -w)); do
+    echo $results | cut -f$i -d" "
+done
