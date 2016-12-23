@@ -1,0 +1,16 @@
+#!/bin/bash
+dflag=0
+strings=""
+dirs=""
+for w in $@; do
+    if [ "$w" == "dirs" ]; then
+        dflag=1
+        continue
+    fi
+    if [ $dflag -eq 0 ]; then
+        strings="$strings $w"
+    else
+        dirs="$dirs $w"
+    fi
+done
+
