@@ -5,7 +5,7 @@ while IFS='' read -r line; do
         first_word=$(echo "$words" | head -1)
         last_word=$(echo "$words" | tail -1)
         str="$first_word $last_word"
-        check=$(echo $str | egrep "^[^ ]*([^ ]{2,})[^ ]*\1[ ][^ ]*\1\1[^ ]*$")
+        check=$(echo $str | egrep "^[^ ]*([^ ]{2,})[^ ]*\1[^ ]*[ ][^ ]*\1\1[^ ]*$")
         if [ "$check" != "" ]; then
             echo "$line"
         fi 
