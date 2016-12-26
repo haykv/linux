@@ -1,28 +1,13 @@
+#!/bin/bash
 i=$1
 file=$2
 >|temp3
 for w in $(cat $file); do
     val=$(P7.2 $i $w)
-    echo "$val $w" >> temp3
+    echo "$val: $w" >> temp3
 done
-sort -n temp3 > temp3_sorted
-prev=0
-str=""
-while read line; do
-    n=$(echo $line | cut -d" " -f1)
-    w=$(echo $line | cut -d" " -f2)
-    
-    if [ $prev -ne $n ]; then
-        if [ "$str" != "" ]; then
-            echo $str
-            str=""
-        fi
-        str="$n: $w "
-    else
-        str="$str $w"
-    fi
-
-    prev=$n
-
-done < temp3_sorted
-echo $str
+keys=$(cut -f1 -d" " temp3 | sort -nu)
+for k in $keys; do
+    words=$(egrep "^$k " temp3 | cut -f2 -d" " | sort | tr "\n" " ")
+    echo "$k $words"
+done
