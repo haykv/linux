@@ -8,16 +8,28 @@ for w in $@; do
         continue
     fi
     if [ $dflag -eq 0 ]; then
-        if [ "$strings" == "" ]; then
-            strings=$w
-        else
-            strings="$strings|$w"
-        fi
+#        if [ "$strings" == "" ]; then
+#            strings=$w
+#        else
+            strings="$strings $w"
+#        fi
     else
         dirs="$dirs $w"
     fi
 done
-results=$(find $dirs -type f -exec egrep -l "($strings)" {} \;)
+files=$(find $dirs -type f)
+results=""
+for f in $files; do
+    flag=$(echo $strings|wc -w)
+    for w in $strings; do
+        if [ "$(egrep $w $f)" != "" ]; then
+            ((flag--))
+        fi
+    done
+    if [ $flag -eq 0 ]; then
+        results="$results $f"
+    fi
+done 
 dirscnt=$(echo $dirs | wc -w)
 >|temp4
 for f in $results; do
