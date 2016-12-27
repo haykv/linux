@@ -2,7 +2,7 @@
 dflag=0
 strings=""
 dirs=""
-for w in $@; do
+for w in "$@"; do
     if [ "$w" == "dirs" ]; then
         dflag=1
         continue
