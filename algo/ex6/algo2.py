@@ -1,5 +1,5 @@
-#/usr/bin/python
 import random
+
 
 def P(arr):
     n = len(arr) + 1
@@ -8,7 +8,7 @@ def P(arr):
     debug = 1
     # B - holds all the differences between pairs, if it's negative than zero
     B = [0 for i in range(0, n)]
-    # C - holds the index of the pair that gave contributed to max sum
+    # C - holds the index of the [ Ai, Ai+1 ] pair that gave contributed to max sum
     C = [0 for i in range(0, n)]
 
     for i in range(1, n - 1):
@@ -22,14 +22,14 @@ def P(arr):
 
     W[1] = B[1]
     WO[1] = 0
-    C[1] = 1
+    C[1] = 1 # C[i] holds the last cell index that contributed to max
 
     for i in range(2, n):
 
         W[i] = B[i] + WO[i - 1]
         WO[i] = max(W[i - 1], WO[i - 1])
 
-        # best cell index goes to C[i]
+        # current best cell index that contributed to max goes to C[i]
         if W[i] > WO[i]:
             C[i] = i
         else:
@@ -37,13 +37,12 @@ def P(arr):
 
     # build results array - includes pairs of cells that give the best result
     result = []
-    prev = C[n - 1]
-    result.append([A[C[i]], A[C[i] + 1]])
-    for i in range(n - 1, 1, -1):
+    prev = C[1]
+    # [Ai, Ai+1] pair C[i] holds the index i
+    for i in range(2, n):
         if C[i] != prev and C[i] - 1 > 0:
             result.append([A[C[i]], A[C[i] + 1]])
-        prev = C[i]
-    result.reverse()
+        prev = C[i]  # remove duplicates
 
     if debug:
         print
@@ -57,6 +56,7 @@ def P(arr):
         print 'PAIRS:', result
 
     return result, max(max(W), max(WO))
+
 
 # testing
 test = [12, 11, 2, 4, 1, 10, 8, 12]

@@ -1,10 +1,12 @@
 #!/usr/bin/python
 import random
+
+
 # The function returns the strictly rising sub-array with index difference == 3 that has maximum sum
 def P(arr):
     n = len(arr) + 1
     A = arr
-    A.insert(0, 0) # add leading zero to match algorithm methodology [ index starts at 1 ]
+    A.insert(0, 0)  # add leading zero to match algorithm methodology [ index starts at 1 ]
     debug = 1
     # B - best sum for range [ 1 .. i ]
     # fill with A[i] to skip elses in the future
@@ -13,7 +15,7 @@ def P(arr):
     C = [0 for i in range(0, n)]
 
     B[1] = A[1]
-    C[1] = 1
+    C[1] = 0
 
     if A[2] > A[1]:
         C[2] = 1
@@ -69,15 +71,12 @@ def P(arr):
     # build result array
     result = []
     result.append(A[maxindex])
+    # get the next value
     next_index = C[maxindex]
-
     # follow the indexes
     while next_index != 0:
         result.append(A[next_index])
         next_index = C[next_index]
-        if next_index == 1:
-            result.append(A[next_index])
-            break
 
     result.reverse()
 
@@ -85,6 +84,7 @@ def P(arr):
         print 'RESULT:', result
 
     return result
+
 
 # testing
 test = [1, 3, 2, 5, 4, 1, 7]
@@ -96,4 +96,6 @@ P(A)
 A = [3, 5, 5, 4, 1, 1, 9, 9, 6, 2, 6]
 P(A)
 A = [4, 2, 8, 7, 2, 6, 7, 6, 4, 6, 2]
+P(A)
+A = [9, 6, 7, 9, 4, 2, 3, 4, 5, 4, 4]
 P(A)
