@@ -1,0 +1,16 @@
+file=$1
+shift
+fields=""
+spaces=""
+sum=0
+while IFS='' read -r line; do
+    str=""
+    for p in "$@"; do
+        wn=$(echo $p|cut -d":" -f1)
+        sp=$(echo $p|cut -d":" -f2)
+        word=$(echo $line | tr -d "\r" | cut -f$wn -d" ")
+        wordstr=$(printf "%${sp}s" $word)
+        str="$str$wordstr"
+    done
+    echo "$str"
+done < $file

@@ -1,0 +1,6 @@
+{ printf "%6s", $3 }
+#{ printf "%5s", $1 }
+#{ printf "%-8s", $4 }
+#{ printf "%4s", $2 }
+#{ printf "%7s", $3 }
+{ print }
