@@ -22,7 +22,8 @@ def P(arr):
 
     W[1] = B[1]
     WO[1] = 0
-    C[1] = 1 # C[i] holds the last cell index that contributed to max
+    if A[1] > A[2]:
+        C[1] = 1  # C[i] holds the last cell index that contributed to max
 
     for i in range(2, n):
 
@@ -37,12 +38,11 @@ def P(arr):
 
     # build results array - includes pairs of cells that give the best result
     result = []
-    prev = C[1]
+    C[1] = 0
     # [Ai, Ai+1] pair C[i] holds the index i
     for i in range(2, n):
-        if C[i] != prev and C[i] - 1 > 0:
+        if C[i] != C[i - 1] and C[i] != 0:
             result.append([A[C[i]], A[C[i] + 1]])
-        prev = C[i]  # remove duplicates
 
     if debug:
         print
@@ -63,7 +63,10 @@ test = [12, 11, 2, 4, 1, 10, 8, 12]
 P(test)
 A = [i for i in range(10, 1, -1)]
 P(A)
+A = [10, 5, 3, 5, 6, 10, 2, 1, 9, 1, 4]
+P(A)
 A = [0, 5, 3, 5, 6, 10, 2, 1, 9, 1, 4]
 P(A)
+
 A = [random.randint(1, 10) for i in range(10)]
 P(A)
