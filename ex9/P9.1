@@ -1,0 +1,64 @@
+#!/bin/awk -f
+function trim(str) {
+    gsub(/(^[ ]*|[ ]*$)/,"",str)
+    return str
+}
+
+function str2arr(str,arr) {
+    split(trim(str),arr," ")
+}
+
+function arrlen(arr) {
+    c=0
+    for (i in arr) {
+        c++
+    }
+    return c
+}
+
+function sumstr(str) {
+    sum=0
+    str2arr(str,A)
+    for (i in A) {
+        sum+=A[i]
+    }
+    return sum
+}
+
+{  
+    if (NF>MAXF[FILENAME])
+        MAXF[FILENAME]=NF
+
+    for (field = 1; field <= NF; field++) {
+        F[FILENAME,field]=F[FILENAME,field]" "$field
+    }
+
+}
+function getresult(filename) {
+    result=""
+    for (field=1; field<=MAXF[filename];field++) {
+        str2arr(F[filename,field],A)
+        c=arrlen(A)
+        fsum=sumstr(F[filename,field])
+        if (c>0) {
+            avg=fsum/c
+            sum=0
+            for (i in A) {
+                if (A[i]>=avg) {
+                    sum+=A[i]
+                }    
+            }
+            if (sum>0)
+                result=result" "sum
+        }
+    }
+    if (length(result)>0)
+        return filename ":" result
+    return ""
+}
+END {
+    for (i in ARGV) {
+        if (i>0)
+            print getresult(ARGV[i])
+    } 
+}
