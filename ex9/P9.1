@@ -1,28 +1,32 @@
 #!/bin/awk -f
 function trim(str) {
+# trims the given string from leading+trailing spaces
     gsub(/(^[ ]*|[ ]*$)/,"",str)
     return str
 }
 
 function str2arr(str,arr) {
-    split(trim(str),arr," ")
+# split given str to array 
+    split(trim(str),arr)
 }
 
 function arrlen(arr) {
-    c=0
-    for (i in arr) {
-        c++
+# returns array length
+    tmplenc=0
+    for (tmplenx in arr) {
+        tmplenc++
     }
-    return c
+    return tmplenc
 }
 
 function sumstr(str) {
-    sum=0
-    str2arr(str,A)
-    for (i in A) {
-        sum+=A[i]
+# returns sum of the str
+    tmpsum=0
+    str2arr(str,tmpsumarr)
+    for (tmpsumx in tmpsumarr) {
+        tmpsum+=tmpsumarr[tmpsumx]
     }
-    return sum
+    return tmpsum
 }
 
 {  
