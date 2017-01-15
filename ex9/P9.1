@@ -61,8 +61,7 @@ function getresult(filename) {
     return ""
 }
 END {
-    for (i in ARGV) {
-        if (i>0)
-            print getresult(ARGV[i])
+    for (i=1;i<ARGC;i++) {
+        print getresult(ARGV[i])
     } 
 }
