@@ -62,7 +62,7 @@ function checkseq(str) {
 
 }
 END {
-    for (i=1;i<=ARGC;i++) {
+    for (i=1;i<ARGC;i++) {
         file=ARGV[i]
         for (j=1;j<=MAXF[file];j++) {
             RES[j]=RES[j]" "file":"F[file,j]
