@@ -1,9 +1,4 @@
 #!/bin/awk -f
-function strip(str,char) {
-    gsub(/(^[:]*|[:]*$)/,"",str)
-    return str
-}
-
 function trim(str) {
 # trims the given string from leading+trailing spaces
     gsub(/(^[ ]*|[ ]*$)/,"",str)
@@ -12,7 +7,7 @@ function trim(str) {
 
 function str2arr(str,arr) {
 # split given str to array 
-    return split(trim(str),arr)
+    split(trim(str),arr)
 }
 
 function arrlen(arr) {
@@ -68,31 +63,14 @@ BEGIN {
     }
     for (book in COUNTER) {
         if (COUNTER[book]>0) {
-            print COUNTER[book] > "temp3_count"
-            print book":"COUNTER[book] > "temp3_name"
+            print COUNTER[book]":"book > "temp3"
         }
     }
-    system("sort -unr temp3_count >| temp3res_count")
-    system("sort temp3_name >| temp3res_name")
-    while ( ( getline line < "temp3res_name" ) > 0 ) {
+    system("sort -t: -k1nr -k2 temp3 >| temp3res")
+    while ( ( getline line < "temp3res" ) > 0 ) {
         split(line,A,":")
-        book=A[1]
-        count=A[2]
-        if (NAMES[count] != "") {
-            NAMES[count] = NAMES[count]":"book
-        } else {
-            NAMES[count] = book
-        }
+        print A[2]" "A[1]
     }
-    while ( ( getline count < "temp3res_count" ) > 0 ) {
-        n=split(NAMES[count],BOOKS,":")
-        if (n==1) {
-            print NAMES[count]" "count
-            continue
-        }
-        for(i=1;i<=n;i++) {
-            print BOOKS[i]" "count
-        }
-    }
+    
     
 }
