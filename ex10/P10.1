@@ -1,0 +1,69 @@
+#!/bin/awk -f
+function trim(str) {
+# trims the given string from leading+trailing spaces
+    gsub(/(^[ ]*|[ ]*$)/,"",str)
+    return str
+}
+
+function str2arr(str,arr) {
+# split given str to array 
+    split(trim(str),arr)
+}
+
+function arrlen(arr) {
+# returns array length
+    tmplenc=0
+    for (tmplenx in arr) {
+        tmplenc++
+    }
+    return tmplenc
+}
+
+function sumstr(str) {
+# returns sum of the str
+    tmpsum=0
+    str2arr(str,tmpsumarr)
+    for (tmpsumx in tmpsumarr) {
+        tmpsum+=tmpsumarr[tmpsumx]
+    }
+    return tmpsum
+}
+
+function checkseq(str) {
+# check if str is sequence return YES/NO
+    str2arr(str,seqarr)
+    l=arrlen(seqarr)
+    
+    if (l == 1 || l == 2)
+        return "YES"
+    
+    dif=seqarr[2]-seqarr[1]
+    
+    for(seqx=3;seqx<=l;seqx++) {
+        if (seqarr[seqx]-seqarr[seqx-1] != dif)
+            return "NO"
+    }
+    
+    return "YES"
+    
+}
+
+{  
+    if (checkseq($0)=="YES") {
+        GOOD[FILENAME] = FILENAME
+    } else {
+        BAD[FILENAME] = FILENAME
+    }
+
+}
+END {
+    for (i=1;i<ARGC;i++) {
+        file=ARGV[i]
+            if (BAD[file] != "") {
+                print "2:"file " NO" > "tmp1"
+            } else {
+                print "1:"file " YES" > "tmp1"
+            }
+        }
+    system("sort -n tmp1 | cut -f2- -d\":\"")
+}
