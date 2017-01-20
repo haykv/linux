@@ -1,0 +1,86 @@
+#!/bin/awk -f
+function trim(str) {
+# trims the given string from leading+trailing spaces
+    gsub(/(^[ ]*|[ ]*$)/,"",str)
+    return str
+}
+
+function str2arr(str,arr) {
+# split given str to array 
+    split(trim(str),arr)
+}
+
+function arrlen(arr) {
+# returns array length
+    tmplenc=0
+    for (tmplenx in arr) {
+        tmplenc++
+    }
+    return tmplenc
+}
+
+function sumstr(str) {
+# returns sum of the str
+    tmpsum=0
+    str2arr(str,tmpsumarr)
+    for (tmpsumx in tmpsumarr) {
+        tmpsum+=tmpsumarr[tmpsumx]
+    }
+    return tmpsum
+}
+
+function checkseq(str) {
+# check if str is sequence return YES/NO
+    str2arr(str,seqarr)
+    l=arrlen(seqarr)
+    
+    if (l == 1 || l == 2)
+        return "YES"
+    
+    dif=seqarr[2]-seqarr[1]
+    
+    for(seqx=3;seqx<=l;seqx++) {
+        if (seqarr[seqx]-seqarr[seqx-1] != dif)
+            return "NO"
+    }
+    
+    return "YES"
+    
+}
+BEGIN {
+    searchbook=ARGV[1]
+    while ( ( getline line < "books" ) > 0 ) {
+        split(line,A,":") 
+        id = A[1]
+        book = A[2]
+        d1=A[4]
+        d2=A[5]
+        if (book != searchbook) {
+            continue
+        }
+        
+        if (d1 != "-" && d2 == "-") {
+            BAD[id] = id
+        } else {
+            bookIDs[id]=id
+        }    
+    }
+    for (id in BAD) {
+        delete bookIDs[id]
+    }
+    if (arrlen(bookIDs)==0) {
+        print "No copies available"
+        exit
+    }
+    for (id in bookIDs) {
+        print id > "temp2"
+    }
+    res=""
+    system("sort -n temp2 >| temp2res")
+    while ( ( getline line < "temp2res" ) > 0 ) {
+        res = res" "line
+    }
+    print trim(res)
+    
+    
+}
