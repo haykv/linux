@@ -16,7 +16,7 @@ function goodcodes {
         fi
     done
 }
-
+>| newbooks1
 while IFS='' read -r line; do
     id=$(echo $line | cut -f1 -d":")
     name=$(echo $line | cut -f2 -d":")
@@ -28,32 +28,42 @@ while IFS='' read -r line; do
     else
         echo "$id:$name" >> good_1
     fi
+    if [ "$cmd" == "return-copy" ]; then
+        if [ "$id" == "$book" ] && [ "$d2" == "-" ]; then
+            curdate=$(date +%d/%m/%Y)
+            d2=$curdate
+        fi
+        echo "$id:$name:$author:$d1:$d2" >> newbooks1
+    fi
     
 done < books
-
+if [ "$cmd" == "return-copy" ]; then
+    mv newbooks1 books
+fi
 if [ "$cmd" == "available-copy" ]; then
-#    str=""
-#    good=$(grep "$book" good_1|sort -nu|cut -f1 -d":")
-#    for i in $good; do
-#        if [ "$(grep $i bad_1)" == "" ]; then
-#            str="$str $i"
-#        fi
-#    done
-    f_book=$book
-    goodcodes
-    if [ "$f_str" != "" ]; then
-        echo $f_str
+    str=""
+    good=$(grep "$book" good_1|sort -nu|cut -f1 -d":")
+    for i in $good; do
+        if [ "$(grep $i bad_1)" == "" ]; then
+            str="$str $i"
+        fi
+    done
+#    f_book=$book
+#    goodcodes
+    if [ "$str" != "" ]; then
+        echo $str
     else
         echo "No copies available"
     fi
 fi
 if [ "$cmd" == "popular-books-report" ]; then
-    cut -f2 -d":" good_1 | sort -u > books_1
+    >| temp_1
+    cut -f2 -d":" books | sort -u > books_1
     while read f_book; do
-        goodcodes
-        cnt=$(echo $f_str | wc -w)
-        if [ $cnt -gt 0 ]; then
-            echo "$f_book $cnt"
+        bookcnt=$(egrep "[0-9]+:$f_book:.*:[^-]+" books|wc -l)
+        if [ $bookcnt -gt 0 ]; then
+            echo "$bookcnt $f_book $bookcnt" >> temp_1
         fi
     done < books_1
+    sort -k1,1nr -k2,2 temp_1 | cut -f2- -d" "
 fi
