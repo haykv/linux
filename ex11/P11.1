@@ -1,4 +1,59 @@
+#1232:The Hobbit:J. R. R. Tolkien:-:-
 cmd=$1
+book=$2
+>| bad_1
+>| good_1
+
+
+function goodcodes {
+    local good
+    local i
+    f_str=""
+    good=$(grep "$f_book" good_1|sort -nu|cut -f1 -d":")
+    for i in $good; do
+        if [ "$(grep $i bad_1)" == "" ]; then
+            f_str="$f_str $i"
+        fi
+    done
+}
 
 while IFS='' read -r line; do
+    id=$(echo $line | cut -f1 -d":")
+    name=$(echo $line | cut -f2 -d":")
+    author=$(echo $line | cut -f3 -d":")
+    d1=$(echo $line | cut -f4 -d":")
+    d2=$(echo $line | cut -f5 -d":")
+    if [ "$d1" != "-" ] && [ "$d2" == "-" ]; then
+        echo "$id:$name" >> bad_1 
+    else
+        echo "$id:$name" >> good_1
+    fi
+    
 done < books
+
+if [ "$cmd" == "available-copy" ]; then
+#    str=""
+#    good=$(grep "$book" good_1|sort -nu|cut -f1 -d":")
+#    for i in $good; do
+#        if [ "$(grep $i bad_1)" == "" ]; then
+#            str="$str $i"
+#        fi
+#    done
+    f_book=$book
+    goodcodes
+    if [ "$f_str" != "" ]; then
+        echo $f_str
+    else
+        echo "No copies available"
+    fi
+fi
+if [ "$cmd" == "popular-books-report" ]; then
+    cut -f2 -d":" good_1 | sort -u > books_1
+    while read f_book; do
+        goodcodes
+        cnt=$(echo $f_str | wc -w)
+        if [ $cnt -gt 0 ]; then
+            echo "$f_book $cnt"
+        fi
+    done < books_1
+fi
