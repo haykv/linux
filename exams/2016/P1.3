@@ -1,0 +1,32 @@
+echo "output 1:"
+s=0
+for x in abc aabbcc def
+ do
+ case $x in
+ ab)
+ s=$[$s+1]
+ echo $x fits ab
+ ;;
+ [bd]*)
+ s=$[$s+2]
+ echo $x fits "bd"
+ ;;
+ esac
+ done
+echo s is $s
+echo "output 2:"
+echo -n aabbbcccaa| tr -s "ab" | wc -c
+echo a b c d e f g h | xargs -n 3 echo | wc -l
+echo "output 3:"
+echo "abchiabc" >|F1
+echo "aa hi bb" >> F1
+echo "aabbb 1hi " >> F1
+echo "2hi" >>F1
+egrep "(^|[ ]+)([^ ]+)hi([ ]|\2$)" F1
+echo "output 4:"
+echo abcdefgh | echo $(egrep -o .) | awk '{print $3,$5}'
+echo 123456789 | awk '{print substr($0,5)}'
+echo "output 5:"
+echo "abacdb" | awk '{gsub("[ab]+","&&",$0); print $0}'
+echo "12233221" | egrep -o "([0-9])\1" | wc -l
+

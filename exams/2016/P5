@@ -1,0 +1,31 @@
+#!/bin/bash
+function check_file {
+    local sum n
+    sum=0
+    for n in $(echo $(cat $1)); do
+        if [ $(echo $n| egrep -c "^[-]*[0-9]+$") -eq 0 ]; then
+            return
+        fi
+        ((sum+=n))
+    done
+    if [ $sum -gt 0 ]; then
+        basename $1
+    fi
+}
+>|tmp5
+files=$(find $1 -type f)
+for f in $files; do
+    res=$(check_file $f)
+    if [ "$res" != "" ]; then
+        echo $res >> tmp5
+    fi
+done
+result=$(cat tmp5 | uniq -c)
+lines=$(echo $result | wc -w)
+>|result
+for i in $(seq 1 2 $lines); do
+    n=$(echo $result| cut -f$i -d" ")
+    file=$(echo $result| cut -f$[i+1] -d" ")
+    echo $file $n >> result
+done
+sort result

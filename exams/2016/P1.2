@@ -1,0 +1,7 @@
+#!/usr/bin/expect
+set x [lindex $argv 0]
+log_user 0
+spawn P1.1
+log_user 1
+expect "Enter" {send "$x\n"}
+expect "The" {exit}

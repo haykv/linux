@@ -1,0 +1,13 @@
+echo -n "Enter string: "
+read str
+res=""
+for i in $(seq $(echo -n $str | wc -c))
+do
+ c=$(echo $str | cut -c$i)
+ for j in $(seq $i)
+ do
+ res=${res}$c
+ done
+done
+echo "The result is: $res"
+
