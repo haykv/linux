@@ -1,0 +1,33 @@
+#!/bin/bash
+
+flag=0
+dirs=""
+files=""
+for a; do
+
+    if [ "$a" == "files" ]; then
+        flag=1
+    fi
+    
+    if [ $flag -eq 0 ]; then
+        dirs="$dirs $a"
+    else
+        if [ "$a" != "files" ]; then
+            files="$files $a"
+        fi
+    fi
+    
+done
+for f in $files; do
+    f_res=$f
+    for d in $dirs; do
+        dir_lines=0
+        found_files=$(find $d -name $f)
+        for x in $found_files; do
+            file_lines=$(cat $x|wc -l)
+            ((dir_lines+=file_lines))
+        done
+        f_res="$f_res $d $dir_lines"
+    done
+    echo $f_res
+done
