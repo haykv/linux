@@ -1,0 +1,52 @@
+function check_cols {
+    local col_a col_b n i a b
+    col_a=$1
+    col_b=$2
+    n=$(echo $col_a| wc -w)
+    for i in $(seq $n); do
+        a=$(echo $col_a|cut -f$i -d" ")
+        b=$(echo $col_b|cut -f$i -d" ")
+        if [ $a -ne $b ]; then
+            echo 0
+            return
+        fi
+    done
+    echo 1
+}
+function get_column {
+    local file col i nf res line
+    file=$1
+    col=$2
+    res=""
+    while read line; do
+        res="$res $(echo $line| cut -f$col -d" ")"
+    done < $file
+    echo $res
+}
+
+function check_file {
+    local file nf res i j col_a col_b
+    file=$1
+    nf=$(head -1 $file | wc -w)
+    res=""
+    for i in $(seq $[nf-1]); do
+        col_a=$(get_column $file $i)
+        for j in $(seq $[i+1] 1 $nf); do
+            col_b=$(get_column $file $j)
+            if [ $(check_cols "$col_a" "$col_b") -ne 0 ]; then
+                res="$res $i $j"
+            fi
+        done
+    done
+    if [ "$res" != "" ]; then
+        res=$(echo $res | tr " " "\n" | sort -nu | tr "\n" " ")
+        echo "$file yes $res"
+    else
+        echo "$file no"
+    fi
+}
+>|tmp4
+for f; do 
+    check_file $f >> tmp4
+done
+sort tmp4
