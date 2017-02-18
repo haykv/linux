@@ -1,0 +1,24 @@
+echo "output 1:"
+mkdir d1; mkdir d2; mkdir d3
+for i in $(seq 3)
+ do
+ echo a$i >| d$i/F$i
+ done
+egrep "a(1|2)" d?/F* | wc -l
+echo "output 2:"
+x=$(echo abccbaazzz | egrep -o . | sort | uniq -c)
+echo $x | cut -d" " -f1,3,5 | tr " " "\n" | sort -u
+echo "output 3:"
+echo "abcshalom" >|F1
+echo "a yy abc shalom" >> F1
+echo "bc shalom " >> F1
+echo " edf shalom " >>F1
+egrep "(^|[abc]+)[^ ]+[ ]+shalom[ ]*$" F1
+echo "output 4:"
+echo " xyz abab" >|F1
+echo "axaaa" >> F1
+echo "axybab" >> F1
+echo " xxax" >> F1
+egrep "(^|[ ]+)([^ ]+)[xyz]+([^ ]+)\2\3" F1
+echo "output 5:"
+echo "ab4yzx12cdefg356" | egrep -o "[0-9]+"

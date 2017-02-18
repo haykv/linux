@@ -1,0 +1,35 @@
+echo "output 1:"
+x=ab9cd10
+case $x in
+1*)
+ echo $x | cut -c3-
+ echo $x | tr -d a-z
+ ;;
+b*)
+ echo $x | cut -c4-
+ echo $x | tr -d 910
+ ;;
+a*)
+ echo $x | cut -c5-
+ echo $x | tr -d ab
+ ;;
+esac
+echo "output 2:"
+echo -n abdabdwxd | tr "d" "\n" | wc -l
+echo -n ab9cd8ab7de6cd9 | tr "6-9" "\n" | sort |uniq -c
+echo "output 3:"
+echo "a shalom de" >|F1
+echo "aa b shalom" >> F1
+echo "aabbb shalom " >> F1
+echo "edf shalom" >>F1
+egrep "^([^ab]+|a+b+)[ ]+shalom([ ]|$)" F1
+echo "output 4:"
+echo "adxda" >|F1
+echo "acadxdxdaca" >> F1
+echo "aabddcddaa" >> F1
+echo "aaadddxxdddaa" >> F1
+egrep "^([a-c]+)[^a]+([d-f]+).+\2\1$" F1
+echo "output 5:"
+echo "abgab789abab" | egrep -o "(ab)+"
+echo "123abc456abc123" | egrep -o "(123|456)" | wc -l
+

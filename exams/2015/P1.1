@@ -1,0 +1,6 @@
+seq 9 3 21 | xargs -n 2 echo >|F1
+while read x
+do
+ y=$(echo $x|tr " " "+")
+ echo $x $[$y]
+done<F1
