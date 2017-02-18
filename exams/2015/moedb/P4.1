@@ -1,4 +1,4 @@
-function check_cols {
+function check_cols_old {
     local col_a col_b n i a b
     col_a=$1
     col_b=$2
@@ -11,6 +11,13 @@ function check_cols {
             return
         fi
     done
+    echo 1
+}
+function check_cols {
+    if [ "$1" != "$2" ]; then
+        echo 0
+        return
+    fi
     echo 1
 }
 function get_column {
