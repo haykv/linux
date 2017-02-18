@@ -1,0 +1,28 @@
+#!/bin/awk -f
+{
+    id=$4
+    month=$2
+    year=$3
+    if (year>=2000) {
+        COUNT[FILENAME]++
+    }
+    DATES[FILENAME][month]++
+}
+END {
+    for (i=1;i<ARGC;i++) {
+        file=ARGV[i]
+        max=0
+        for (m in DATES[file]) {
+            if (DATES[file][m]>max) {
+                max=DATES[file][m]
+            }
+        }
+        res=file
+        for (m in DATES[file]) {
+            if (DATES[file][m]==max) {
+                res=res " " m
+            }
+        }
+        print res,COUNT[file]
+    }
+}
