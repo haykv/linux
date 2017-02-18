@@ -1,0 +1,20 @@
+cat $1 >|tmp
+nums=""
+while true
+ do
+   if [ $(wc -c < tmp) -eq 0 ];then
+     break
+   fi   
+   nums="$nums $(P2 tmp)"
+   # construct kiluf from tmp
+   >|kiluf
+   while read x
+    do
+     y=$[$(echo $x | wc -w)-1]
+     if [ $y -gt 0 ];then
+      echo $x | cut -d" " -f1-$y >>kiluf
+     fi
+    done<tmp
+   cat kiluf>|tmp   
+ done
+echo $nums

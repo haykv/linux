@@ -1,0 +1,22 @@
+#!/bin/bash
+function calc_num_words  {
+  echo -n "" >| tmp
+  while read x
+    do
+     if [ ${#x} -ne 0 ]
+       then 
+         if [ $x != " " ]
+           then
+             echo $x | tr " " "\n" >> tmp         
+         fi
+     fi
+    done < "$1"
+    cat tmp | sort -u | wc -l
+}
+echo -n "" >| tmp1
+for f
+  do
+    n=$(calc_num_words "$f")
+    echo "$f $n" >> tmp1
+  done
+sort -n +1 -2 tmp1

@@ -1,0 +1,9 @@
+#!/bin/bash
+for x
+  do
+   n=$(sort "$x" | uniq -d | wc -l)
+   if [ $n -eq 0 ]
+     then
+      echo "$x"
+   fi
+  done

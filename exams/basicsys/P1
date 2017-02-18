@@ -1,0 +1,36 @@
+#!/bin/awk -f
+function chk(j1,j2,file,col1,col2) {
+	col1=get_col(j1,file)
+	col2=get_col(j2,file)
+	if (col1 == col2) return "YES"
+	return "NO"	
+}
+function get_col(j,file,result) {
+	result=""
+	while (getline<file) {
+		result=result" "$j
+	}
+	close(file)
+	return substr(result,2)
+}
+function calc_file(file,n,i,j){
+	getline<file
+	n=NF
+	for (i=1;i<=n;i++){
+		for (j=1;j<=n;j++){
+			if (i!=j && chk(i,j,file)=="YES"){
+				print file" "i" "j" YES"
+				return
+			}
+		}
+	}
+	print file" NO"
+}
+
+BEGIN {
+	for (i=1;i<ARGC;i++){
+		calc_file(ARGV[i])
+	}
+}
+	
+

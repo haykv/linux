@@ -1,0 +1,6 @@
+#!/bin/awk -f
+END{print "end"}
+{print $1
+ print $2
+}
+BEGIN{print "begin"}
